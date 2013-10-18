@@ -52,7 +52,7 @@ public class Client {
 				o.setClient(this);
 				serverBuffer.add(o);
 				o.applyOperation(state);
-				System.out.print("Client" + id + " send state: ");
+				System.out.print("-Client" + id + " send state: ");
 				o.checkState(state);
 				operationHistory.add(o);
 				setDeSynchronizationStatus(o);
@@ -76,7 +76,7 @@ public class Client {
 					System.out.println("[TEMP] Syncing");
 					setSynchronizationStatus(o.getReferenceToOperation());
 					if (syncstatus) {
-						o.syncOperation(state); 
+						//o.syncOperation(state); 
 						//o.applyOperation(state);
 						System.out.println(state);
 						

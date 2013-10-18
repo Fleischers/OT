@@ -5,10 +5,10 @@ public class OT {
 	
 
 	public static void main(String[] args) {
-		Operation o1 = new Operation().insert(0, "a");
-		Operation o2 = new Operation().insert(0, "b");
-		Operation o3 = new Operation().insert(0, "x");
-		Operation o4 = new Operation().insert(1, "y");
+		Operation o1 = new Operation().insert(0, "a", 0);
+		Operation o2 = new Operation().insert(0, "b", 1);
+		Operation o3 = new Operation().insert(0, "x", 0);
+		Operation o4 = new Operation().insert(0, "y", 1);
 		
 		Operation d1 = new Operation().delete(0, 1);
 		//Operation d2 = new Operation().delete(0, 2);
@@ -84,12 +84,13 @@ public class OT {
 	
 	public static void scene3 (Client client1, Client client2, Client client3, Server server) {
 		client1.send();
-		
+		client1.printState();
 		client2.send();
-		
+		client2.printState();
 		client1.send();
-		
+		client1.printState();
 		client2.send();
+		client2.printState();
 		
 		server.receive();
 		server.receive();

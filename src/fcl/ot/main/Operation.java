@@ -19,9 +19,10 @@ public class Operation {
 		
 	}
 	
-	Operation insert(int position, String d) {
+	Operation insert(int position, String d, int toE) {
 		operation = 1;
 		startPosition = position;
+		toEnd = toE;
 		data = d;
 		return this;
 	}
@@ -65,7 +66,7 @@ public class Operation {
 	
 	public void checkState(List<String> state) {
 		
-			toEnd = state.size() - 1 - startPosition; //
+			toEnd = state.size() - 1 - startPosition; 
 			System.out.println("startp " + startPosition + " statesize " + state.size() + " toend " + toEnd);
 		 
 	}
@@ -74,7 +75,7 @@ public class Operation {
 		//System.out.println(this);
 		switch (operation) {
 		case 1: 
-			if (startPosition >= state.size()) {
+			if (startPosition >= state.size() ) {
 				int i=state.size();
 				while (startPosition > i) {
 					i ++;
@@ -100,6 +101,7 @@ public class Operation {
 						} 
 						if (toEnd == 0) {
 							state.add(data);
+							startPosition = state.size() - 1;
 						} 
 						
 					}
@@ -144,6 +146,63 @@ public class Operation {
 		
 	}
 	
+	public void applyServerOperation(List<String> state) {
+		//System.out.println(this);
+		switch (operation) {
+		case 1: 
+			if (startPosition >= state.size()) {
+				int i=state.size();
+				while (startPosition > i) {
+					i ++;
+					state.add(" ");
+				}
+				if ((state.size() - toEnd) != startPosition ) {
+					int tp = startPosition;
+					tp = state.size() - toEnd;
+					state.add(tp, data);
+				} else {
+					state.add(startPosition, data);
+				}
+			} else {
+				if (startPosition < state.size()) {
+					if (state.get(startPosition).equals(" ")) {
+						state.set(startPosition, data); 
+					} else {
+						
+						if (toEnd > 0) {
+							//int tp = ;
+							//startPosition = toEnd;
+							state.add(startPosition, data);
+							
+						} 
+						if (toEnd == 0) {
+							state.add(data);
+							startPosition = state.size() - 1;
+						} 
+						
+					}
+					
+				}
+			} 
+			break;
+		case 2: 
+			if (startPosition < state.size()) {
+				state.subList(startPosition, endPosition).clear();
+			} 
+			break;
+		case 3: 
+			if (startPosition >= state.size()) {
+				state.add(data);
+			} else {
+				state.subList(startPosition, endPosition).clear();
+				state.add(startPosition, data);
+			}
+			break;
+		default: System.out.println("applyOperation not working!");
+		}
+		
+	}
+	
 	public boolean syncOperation(List<String> state) {
 		System.out.println("[TEMP] Sync of " + this);
 		switch (operation) {
@@ -151,11 +210,33 @@ public class Operation {
 			
 			return true;
 		case 1: 
+			/*if (startPosition < state.size()) {
+				if (state.get(startPosition).equals(" ")) {
+					state.set(startPosition, data); 
+				} else {
+					
+					if (toEnd > 0) {
+						state.add(startPosition, data);
+					} 
+					if (toEnd == 0) {
+						state.add(data);
+						startPosition = state.size() - 1;
+					} 
+					
+				}
+				
+			}*/
 			if (startPosition < state.size()) {
 				if (state.get(startPosition).equals(" ")) {
 					state.set(startPosition, data); 
 				} else {
-					state.add(data); 
+					if (toEnd > 0) {
+						state.add(startPosition, data);
+					} 
+					if (toEnd == 0) {
+						state.add(startPosition, data);
+						//startPosition = state.size() - 1;
+					} 
 				}
 			} else {
 				int i=state.size();

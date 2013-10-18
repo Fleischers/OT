@@ -35,10 +35,10 @@ public class Server {
 			Operation o = buffer.get(0);
 			buffer.remove(0);
 			operationHistory.add(o);
-			o.applyOperation(state);
+			o.applyServerOperation(state);
 			printState();
 			System.out.println("Server OperationHistory: " + operationHistory);
-			//o.checkState(state);
+			o.checkState(state);
 			send(o);
 			
 			
@@ -53,7 +53,7 @@ public class Server {
 				List <Operation> bufferclient = c.getBuffer();
 				bufferclient.add(tempOperation);
 			} else {
-				Operation tempOperation = new Operation().clone(o);
+				Operation tempOperation = o; //new Operation().clone(o);
 				List <Operation> list = c.getBuffer();
 				list.add(tempOperation);
 			}

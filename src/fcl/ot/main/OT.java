@@ -5,18 +5,18 @@ public class OT {
 	
 
 	public static void main(String[] args) {
-		Operation o1 = new Operation().insert(0, "a", 0);
-		Operation o2 = new Operation().insert(0, "b", 1);
-		Operation o3 = new Operation().insert(0, "x", 0);
-		Operation o4 = new Operation().insert(0, "y", 1);
+		Operation o1 = new Operation().insert(1, "a", 0);
+		Operation o2 = new Operation().insert(1, "b", 1);
+		Operation o3 = new Operation().insert(1, "x", 0);
+		Operation o4 = new Operation().insert(1, "y", 1);
 		
 		Operation d1 = new Operation().delete(0, 1);
 		//Operation d2 = new Operation().delete(0, 2);
 		
 		Operation r1 = new Operation().replace(0, 2, "7");
 		
-		Operation[] text1 = {o1, o2};
-		Operation[] text2 = {o3, o4};
+		Operation[] text1 = {o1, o2, new Operation().insert(1, "c", 2), new Operation().insert(1, "d", 3)};
+		Operation[] text2 = {o3, o4, new Operation().insert(1, "v", 2), new Operation().insert(1, "w", 3)};
 		Operation[] text3 = {d1, r1};
 		
 		Server server = Server.getInstance();
@@ -28,6 +28,9 @@ public class OT {
 		//-------------------------------
 		//scene 1 2 3 4
 		scene3(client1, client2, client3, server);
+		//scene3(client1, client2, client3, server);
+		
+		
 		
 		//--------------------------------
 		//print(client1, client2, client3, server);
@@ -158,6 +161,39 @@ Client3: [x, y, b, a]*/
 		print(client1, client2, client3, server);
 	}
 	
+	public static void scene5 (Client client1, Client client2, Client client3, Server server) {
+		client1.send();
+		client2.send();		
+		
+		server.receive();
+		server.receive();	
+		
+		client1.receive();
+		client1.receive();
+		
+		client2.receive();
+		client2.receive();
+		
+		client2.send();
+		client1.send();
+		
+		server.receive();
+		server.receive();
+		
+		
+		client1.receive();
+		client1.receive();
+		
+		
+		client2.receive();
+		client2.receive();
+		
+		client3.receive();
+		client3.receive();
+		client3.receive();
+		client3.receive();
+		print(client1, client2, client3, server);
+	}
 	
 	public static void print (Client c1, Client c2, Client c3, Server s) {
 		System.out.println("\nResult:");

@@ -47,8 +47,9 @@ public class Operation {
 	Operation zeroOperation (Operation o) {
 		syncReferenceToOperation = o;
 		operation = 0;
-		startPosition = 0;
-		endPosition = 0;
+		startPosition = o.startPosition;
+		endPosition = o.endPosition;
+		toEnd = o.toEnd;
 		data = "";
 		return this;
 	}
@@ -95,8 +96,8 @@ public class Operation {
 					} else {
 						
 						if (toEnd > 0) {
-							int tp = startPosition;
-							tp = state.size() - toEnd;
+							/*int tp = startPosition;
+							tp = state.size() - toEnd ;*/
 							state.add(startPosition, data);
 						} 
 						if (toEnd == 0) {
@@ -146,6 +147,77 @@ public class Operation {
 		
 	}
 	
+	
+	
+	public boolean syncOperation(List<String> state) {
+		System.out.println("[TEMP] Sync of " + this);
+		Operation old = getReferenceToOperation().getReferenceToOperation();
+		switch (old.operation) {
+		case 0: 
+			
+			return true;
+		case 1: 
+			System.out.println("here");
+			System.out.println(startPosition + "" + old.startPosition + "" + toEnd + "" + old.toEnd);
+			if (startPosition != old.startPosition || toEnd != old.toEnd) {
+				System.out.println("here again");
+
+				Operation delete = new Operation().delete(old.startPosition, old.startPosition + 1);
+				delete.applyOperation(state);
+				new Operation().insert(startPosition, old.data, toEnd).applyOperation(state);
+			}
+			return true;
+		case 2: 
+			
+		case 3: 
+			
+		default: {
+			System.out.println("syncOperation not working!");
+			return false;
+		}
+		}
+	}
+
+	
+	String getData() {
+		return data;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
+	
+	public void setClient(Client c) {
+		client = c;
+	}
+	
+	Operation getReferenceToOperation () {
+		return syncReferenceToOperation;
+	}
+	
+	
+	
+	public boolean isSync () {
+		if (operation == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Override
+	public String toString () {
+		switch (operation) {
+		case 0: return "sync operation (" + toEnd + ") to " + startPosition;
+		case 1: return "insert " + data + "(" + toEnd + ")" + " to " + startPosition + " position"; 
+		case 2: return "delete " + "data" + " from " + startPosition + "-" + endPosition + " positions";
+		case 3: return "replace and set to " + data + " from " + startPosition + "-" + endPosition + " positions";
+		default: return "no operations";
+		}
+	}
+
+	/*
 	public void applyServerOperation(List<String> state) {
 		//System.out.println(this);
 		switch (operation) {
@@ -202,102 +274,6 @@ public class Operation {
 		}
 		
 	}
-	
-	public boolean syncOperation(List<String> state) {
-		System.out.println("[TEMP] Sync of " + this);
-		switch (operation) {
-		case 0: 
-			
-			return true;
-		case 1: 
-			/*if (startPosition < state.size()) {
-				if (state.get(startPosition).equals(" ")) {
-					state.set(startPosition, data); 
-				} else {
-					
-					if (toEnd > 0) {
-						state.add(startPosition, data);
-					} 
-					if (toEnd == 0) {
-						state.add(data);
-						startPosition = state.size() - 1;
-					} 
-					
-				}
-				
-			}*/
-			if (startPosition < state.size()) {
-				if (state.get(startPosition).equals(" ")) {
-					state.set(startPosition, data); 
-				} else {
-					if (toEnd > 0) {
-						state.add(startPosition, data);
-					} 
-					if (toEnd == 0) {
-						state.add(startPosition, data);
-						//startPosition = state.size() - 1;
-					} 
-				}
-			} else {
-				int i=state.size();
-				while (startPosition > i) {
-					i ++;
-					state.add(" ");
-					
-				}
-				state.add(startPosition, data);
-			}
-			return false;
-		case 2: 
-			
-		case 3: 
-			
-		default: {
-			System.out.println("syncOperation not working!");
-			return false;
-		}
-		}
-	}
-
-	
-	String getData() {
-		return data;
-	}
-	
-	public Client getClient() {
-		return client;
-	}
-	
-	public void setClient(Client c) {
-		client = c;
-	}
-	
-	Operation getReferenceToOperation () {
-		return syncReferenceToOperation;
-	}
-	
-	
-	
-	public boolean isSync () {
-		if (operation == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	@Override
-	public String toString () {
-		switch (operation) {
-		case 0: return "sync operation";
-		case 1: return "insert " + data + "(" + toEnd + ")" + " to " + startPosition + " position"; 
-		case 2: return "delete " + "data" + " from " + startPosition + "-" + endPosition + " positions";
-		case 3: return "replace and set to " + data + " from " + startPosition + "-" + endPosition + " positions";
-		default: return "no operations";
-		}
-	}
-
-	
+	*/
 
 }

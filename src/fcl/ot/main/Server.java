@@ -35,7 +35,7 @@ public class Server {
 			Operation o = buffer.get(0);
 			buffer.remove(0);
 			operationHistory.add(o);
-			o.applyServerOperation(state);
+			o.applyOperation(state);
 			printState();
 			System.out.println("Server OperationHistory: " + operationHistory);
 			o.checkState(state);

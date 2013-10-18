@@ -65,7 +65,7 @@ public class Operation {
 	
 	public void checkState(List<String> state) {
 		
-			toEnd = state.size() - 1 - startPosition;
+			toEnd = state.size() - 1 - startPosition; //
 			System.out.println("startp " + startPosition + " statesize " + state.size() + " toend " + toEnd);
 		 
 	}
